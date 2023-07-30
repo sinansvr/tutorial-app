@@ -9,8 +9,8 @@ const Home = () => {
 
   const getTutorials = async () => {
     try {
-      const data = await axios(BASE_URL)
-      setTutorials(data.data)
+      const res = await axios(BASE_URL)
+      setTutorials(res.data)
     } catch (error) {
       console.log(error)
     }

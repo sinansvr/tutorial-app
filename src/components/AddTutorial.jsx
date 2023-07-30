@@ -1,11 +1,10 @@
 import axios from "axios"
 import { useState } from "react"
 
-const AddTutorial = () => {
+const AddTutorial = ({getTutorials}) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
-
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     const newTutor= {title:title, description:description}
@@ -17,13 +16,19 @@ const AddTutorial = () => {
 
 
   const postTutorials= async(newTutor)=>{
+    const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
+
+
     try {
       await axios.post(BASE_URL,newTutor)
 
     } catch (error) {
       console.log(error)
     }
+     getTutorials()
   }
+
+ 
 
   return (
     <div className="container text-center mt-4">

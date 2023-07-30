@@ -1,11 +1,17 @@
 import { FaEdit } from "react-icons/fa"
 import { AiFillDelete } from "react-icons/ai"
 import axios from "axios"
+import EditTutor from "./EditTutor"
+import { useState } from "react"
 
-const TutorialList = ({tutorials,getTutorials}) => {
- 
-  const handleDelete = async(id)=>{
-    const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
+const TutorialList = ({ tutorials, getTutorials }) => {
+
+  const [editItem, setEditItem] = useState()
+
+  const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
+
+  const handleDelete = async (id) => {
+    
 
     try {
 
@@ -15,6 +21,18 @@ const TutorialList = ({tutorials,getTutorials}) => {
       console.log(error)
     }
     getTutorials()
+  }
+
+  const editData =async({id,title,description})=>{
+    
+
+    try {
+      await axios.put(`${BASE_URL}${id}/`,{id:2702,   title:"REACT",description:"JS Lib"})
+    } catch (error) {
+      console.log(error)
+    }
+    getTutorials()
+
   }
 
   return (
@@ -43,12 +61,20 @@ const TutorialList = ({tutorials,getTutorials}) => {
                     size={20}
                     type="button"
                     className="me-2 text-warning"
+                    data-bs-toggle="modal"
+                    data-bs-target="#open-modal"
+                    // onClick={()=>editData({
+                    //   id:2703,
+                    //   title:"REACT",
+                    //   description:"JS Lib"
+                    // })}
+                    onClick={()=>setEditItem(item)}
                   />
                   <AiFillDelete
                     size={22}
                     type="button"
                     className="text-danger "
-                    onClick={()=>handleDelete(id)}
+                    onClick={() => handleDelete(id)}
                   />
                 </td>
               </tr>
@@ -56,6 +82,9 @@ const TutorialList = ({tutorials,getTutorials}) => {
           })}
         </tbody>
       </table>
+
+      <EditTutor editItem={editItem}/>
+
     </div>
   )
 }

@@ -1,13 +1,14 @@
 import axios from "axios"
 import { useState } from "react"
+import Modal from "./EditTutor"
 
-const AddTutorial = ({getTutorials}) => {
+const AddTutorial = ({ getTutorials }) => {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    const newTutor= {title:title, description:description}
+    const newTutor = { title: title, description: description }
     console.log(newTutor)
     postTutorials(newTutor)
     setTitle("")
@@ -15,22 +16,23 @@ const AddTutorial = ({getTutorials}) => {
   }
 
 
-  const postTutorials= async(newTutor)=>{
+  const postTutorials = async (newTutor) => {
     const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
 
 
     try {
-      await axios.post(BASE_URL,newTutor)
+      await axios.post(BASE_URL, newTutor)
 
     } catch (error) {
       console.log(error)
     }
-     getTutorials()
+    getTutorials()
   }
 
- 
+
 
   return (
+
     <div className="container text-center mt-4">
       <h1 className="display-6 text-danger">Add Your Tutorial</h1>
       <form onSubmit={handleSubmit}>
@@ -66,7 +68,11 @@ const AddTutorial = ({getTutorials}) => {
           Submit
         </button>
       </form>
+
     </div>
+
+
+
   )
 }
 

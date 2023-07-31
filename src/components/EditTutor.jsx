@@ -1,12 +1,37 @@
-import { useState } from "react"
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 
-const EditTutor = ({editItem}) => {
-    const {id, title:newTitle ,description:newDescription}=editItem
+const EditTutor = ({editItem ,getTutorials}) => {
+  
+const{title:oldTitle,description:oldDescription,id}=editItem
+//   console.log(oldTitle,oldDescription,id)
+const [title, setTitle] = useState(oldTitle)
+const [description, setDescription] = useState(oldDescription)
 
-    const [title, setTitle] = useState(newTitle)
-    const [description, setDescription] = useState(newDescription)
+useEffect(()=>{
+    setTitle(oldTitle);
+    setDescription(oldDescription);
+},[oldTitle,oldDescription])
 
+
+const editTutor=async(tutor)=>{
+    const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
+
+    try {
+        await axios.put(`${BASE_URL}${id}/`,tutor);
+    } catch (error) {
+        console.log(error)        
+    }
+    getTutorials();
+}
+
+
+const handleSubmit=(e)=>{
+    e.preventDefault()
+    editTutor({title:title,description:description})
+
+}
     
     return (
         <>
@@ -32,7 +57,7 @@ const EditTutor = ({editItem}) => {
                             />
                         </div>
                         <div className="modal-body">
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">
                                         Title
@@ -62,7 +87,8 @@ const EditTutor = ({editItem}) => {
                                     />
                                 </div>
                                 <div className="text-end">
-                                    <button type="submit" className="btn btn-danger mb-4">
+                                    <button type="submit"
+                                    data-bs-dismiss="modal" className="btn btn-danger mb-4">
                                     Save
                                 </button>
                                 </div>

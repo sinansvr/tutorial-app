@@ -22,7 +22,7 @@ const Home = () => {
     getTutorials()
   }, [])
 
-  console.log(tutorials)
+  // console.log(tutorials)
 
   return (
     <>

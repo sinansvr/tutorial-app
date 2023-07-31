@@ -6,7 +6,7 @@ import { useState } from "react"
 
 const TutorialList = ({ tutorials, getTutorials }) => {
 
-  const [editItem, setEditItem] = useState()
+  const [editItem, setEditItem] = useState("")
 
   const BASE_URL = "https://tutorial-api.fullstack.clarusway.com/tutorials/"
 
@@ -23,17 +23,17 @@ const TutorialList = ({ tutorials, getTutorials }) => {
     getTutorials()
   }
 
-  const editData =async({id,title,description})=>{
+  // const editData =async({id,title,description})=>{
     
 
-    try {
-      await axios.put(`${BASE_URL}${id}/`,{id:2702,   title:"REACT",description:"JS Lib"})
-    } catch (error) {
-      console.log(error)
-    }
-    getTutorials()
+  //   try {
+  //     await axios.put(`${BASE_URL}${id}/`,{id:2702,   title:"REACT",description:"JS Lib"})
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  //   getTutorials()
 
-  }
+  // }
 
   return (
     <div className="container mt-4">
@@ -68,7 +68,7 @@ const TutorialList = ({ tutorials, getTutorials }) => {
                     //   title:"REACT",
                     //   description:"JS Lib"
                     // })}
-                    onClick={()=>setEditItem(item)}
+                   onClick={()=>setEditItem(item)}
                   />
                   <AiFillDelete
                     size={22}
@@ -83,7 +83,7 @@ const TutorialList = ({ tutorials, getTutorials }) => {
         </tbody>
       </table>
 
-      <EditTutor editItem={editItem}/>
+      <EditTutor editItem={editItem} getTutorials={getTutorials}/>
 
     </div>
   )
